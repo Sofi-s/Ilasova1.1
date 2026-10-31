@@ -8,19 +8,45 @@
   Объект после манипуляций следует вернуть в качестве результата работы функции.
 */
 export function personUpdate(data) {
+    if (data.gender === 'female') {
+        delete data.age;
+    } else if (data.gender === 'male') {
+        if (!('income' in data)) {
+            data.income = 100000;
+        }
+    }
+    return data;
 }
 
 /*
-  В функцию objectFieldsList приходят три объекта с различными полями, список которых заранее неизвестен.
+  В функцию objectFieldsList приходят три объекта с различными полями, список которых 
+  заранее неизвестен.
   Верните список названий этих полей в алфавитном порядке в виде массива строк.
 */
 export function objectFieldsList(obj1, obj2, obj3) {
+    const keysSet = new Set([
+        ...Object.keys(obj1),
+        ...Object.keys(obj2),
+        ...Object.keys(obj3),
+    ]);
+
+    return Array.from(keysSet).sort();
 }
 
 /*
   Верните в результате работы функции массив с клонами объекта obj.
-  При этом каждый клон должен дополнительно содержать поле id со своим порядковым номером в массиве.
+  При этом каждый клон должен дополнительно содержать поле id со
+   своим порядковым номером в массиве.
   Количество клонов - count.
 */
 export function objectClone(obj, count) {
+    const clones = [];
+
+    for (let i = 0; i < count; i++) {
+        const clone = JSON.parse(JSON.stringify(obj));
+        clone.id = i;
+        clones.push(clone);
+    }
+
+    return clones;
 }
